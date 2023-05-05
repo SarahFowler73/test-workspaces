@@ -2,8 +2,18 @@
   "name": "@test-workspaces/subapp2",
   "version": "1.0.0",
   "license": "MIT",
+  "devDependencies": {
+    "@test-workspaces/configs": "1.0.0",
+    "@test-workspaces/utils": "1.0.0"
+  },
   "scripts": {
-    "lint-staged": "echo 'Skipping lint-staged for eslint-config'",
-    "prettier:check": "echo 'Skipping prettier:check for eslint-config'"
+    "test": "jest"
+  },
+  "lint-staged": {
+    "(src)/**/*.{js,ts,tsx}": [
+      "eslint --fix-type layout --fix --cache",
+      "prettier --write",
+      "jest --findRelatedTests --silent"
+    ]
   }
 }

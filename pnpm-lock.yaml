@@ -128,16 +128,35 @@ importers:
       ts-node: 10.9.1_iu23poxt2egi7kgpwm3gu6uhry
 
   src/packages/app:
-    specifiers: {}
+    specifiers:
+      '@test-workspaces/configs': 1.0.0
+      '@test-workspaces/subapp1': 1.0.0
+      '@test-workspaces/subapp2': 1.0.0
+      '@test-workspaces/utils': 1.0.0
+    devDependencies:
+      '@test-workspaces/configs': link:../configs
+      '@test-workspaces/subapp1': link:../subapp1
+      '@test-workspaces/subapp2': link:../subapp2
+      '@test-workspaces/utils': link:../utils
 
   src/packages/configs:
     specifiers: {}
 
   src/packages/subapp1:
-    specifiers: {}
+    specifiers:
+      '@test-workspaces/configs': 1.0.0
+      '@test-workspaces/utils': 1.0.0
+    devDependencies:
+      '@test-workspaces/configs': link:../configs
+      '@test-workspaces/utils': link:../utils
 
   src/packages/subapp2:
-    specifiers: {}
+    specifiers:
+      '@test-workspaces/configs': 1.0.0
+      '@test-workspaces/utils': 1.0.0
+    devDependencies:
+      '@test-workspaces/configs': link:../configs
+      '@test-workspaces/utils': link:../utils
 
   src/packages/utils:
     specifiers:

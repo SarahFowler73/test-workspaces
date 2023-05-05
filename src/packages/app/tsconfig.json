@@ -1,0 +1,16 @@
+{
+  "extends": "@test-workspaces/configs/tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "composite": true,
+    "declarationMap": true,
+    "declaration": true,
+    "stripInternal": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/**/*"]
+}
