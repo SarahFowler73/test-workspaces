@@ -1,0 +1,9 @@
+{
+  "name": "@test-workspaces/subapp1",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "lint-staged": "echo 'Skipping lint-staged for eslint-config'",
+    "prettier:check": "echo 'Skipping prettier:check for eslint-config'"
+  }
+}

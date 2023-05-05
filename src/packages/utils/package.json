@@ -1,0 +1,12 @@
+{
+  "name": "@test-workspaces/utils",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@test-workspaces/configs": "1.0.0"
+  },
+  "scripts": {
+    "lint-staged": "echo 'Skipping lint-staged for eslint-config'",
+    "prettier:check": "echo 'Skipping prettier:check for eslint-config'"
+  }
+}
