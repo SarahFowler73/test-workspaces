@@ -8,9 +8,7 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.(css|less|scss)$': 'babel-jest',
   },
-  coveragePathIgnorePatterns: ['test/'],
   transformIgnorePatterns: [`node_modules/(?!(?:.pnpm/)?(uuid))`],
   moduleDirectories: ['node_modules', 'src'],
-  testPathIgnorePatterns: ['_environment', '<rootDir>/dist/'],
-  setupFilesAfterEnv: ['<rootDir>/config/jest/testSetup.js'],
+  testPathIgnorePatterns: ['<rootDir>(/.*)/dist'],
 }
