@@ -21,10 +21,14 @@ This POC repository may not solve all of the above problems, but it will attempt
    - Define the inheritence relationship of workspaces (they cannot be circularly required) and isolate library code so that business logic cannot sneak in
    - Clarify the dependency graph, isolating library code (`utils`) from business code (`app`, `subapp1`, `subapp2`).
    - Give each workspace its own tests, eslint rules (extended from a base config), tsconfig (extended from a base config) will allow different rulesets and tighter/looser rules on legacy subapps vs modern subapps.
-   <!--
 
-```
-@startuml
+
+![graph](test-workspaces-graph.svg)
+
+   
+   
+   
+<!--@startuml
 digraph Workspaces {
     label="Division of Workspaces"
     labelloc=t
@@ -48,10 +52,6 @@ digraph Workspaces {
         Subapp2 [color="steelblue"]
     }
 }
-@enduml
-```
-
--->
-![graph](test-workspaces-graph.svg)
+@enduml-->
 
 The rest is WIP
