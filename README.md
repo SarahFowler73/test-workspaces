@@ -1,46 +1,57 @@
-# Getting Started with Create React App
+# Test Workspaces
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The purpose of this repository is to POC `pnpm` workspaces with an ejected `create-react-app`.
 
-## Available Scripts
+## The problem being solved
 
-In the project directory, you can run:
+1. A monorepo that
+   - has distinct subapps, but share library code
+   - has many circular dependencies and unclear deliniations between business and library code
+   - has subapps and code section that can be more or less legacy, but newer code cannot implement rules for tighter code standards without fixing all violations in legacy code
+2. Long-running tests and ci checks must be performed on the entire repository, regardless of the area that changed
+3. Currently, this monorepo has one redux store, which makes breaking it up difficult. All subapps share app code like session and user info through redux
+4. Each subapp shares a single navigation element that imports from each subapp
+5. The release of one subapp is only possible with the release of the entire monorepo, i.e. subapps cannot be versioned.
 
-### `npm start`
+## The solution being tested
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This POC repository may not solve all of the above problems, but it will attempt to solve the first issues and move through one at a time.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Break the monorepo into workspaces using `pnpm`.
+   - Define the inheritence relationship of workspaces (they cannot be circularly required) and isolate library code so that business logic cannot sneak in
+   - Clarify the dependency graph, isolating library code (`utils`) from business code (`app`, `subapp1`, `subapp2`).
+   - Give each workspace its own tests, eslint rules (extended from a base config), tsconfig (extended from a base config) will allow different rulesets and tighter/looser rules on legacy subapps vs modern subapps.
+   <!--
 
-### `npm test`
+```
+@startuml
+digraph Workspaces {
+    label="Division of Workspaces"
+    labelloc=t
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    subgraph cluster_reusable_workspaces {
+        label="Reusable Workspaces. All should be business logic free"
+        margin=30
 
-### `npm run build`
+        config [color="green", label="Config (extended by all workspaces)"]
+        utils [color="darkorange"]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    }
+    subgraph cluster_apps {
+        label="Application Logic"
+        margin=30
+        labelloc=b
+        config -> {utils;Subapp1;Subapp2;App} [color="green"]
+        utils -> {Subapp1;Subapp2;App} [color="darkorange"]
+        {Subapp1;Subapp2} -> App [color="steelblue"]
+        Subapp1 [color="steelblue"]
+        Subapp2 [color="steelblue"]
+    }
+}
+@enduml
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-->
+![graph](test-workspaces-graph.svg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The rest is WIP
